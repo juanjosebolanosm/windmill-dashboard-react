@@ -1,15 +1,19 @@
 import { lazy } from 'react'
 
 // use lazy for better code splitting, a.k.a. load faster
-const Dashboard = lazy(() => import('../pages/Dashboard'))
-const Forms = lazy(() => import('../pages/Forms'))
-const Cards = lazy(() => import('../pages/Cards'))
-const Charts = lazy(() => import('../pages/Charts'))
+const Productos = lazy(() => import('../pages/Productos'))
+const Restaurantes = lazy(() => import('../pages/Restaurantes'))
+const EditarRestaurante = lazy(() => import('../pages/EditarRestaurante'))
+const Domiciliarios = lazy(() => import('../pages/Domiciliarios'))
+const Managers = lazy(() => import('../pages/Managers'))
 const Buttons = lazy(() => import('../pages/Buttons'))
-const Modals = lazy(() => import('../pages/Modals'))
 const Tables = lazy(() => import('../pages/Tables'))
 const Page404 = lazy(() => import('../pages/404'))
 const Blank = lazy(() => import('../pages/Blank'))
+const EditarDomiciliario = lazy(() => import('../pages/EditarDomiciliario'))
+const EditarManager = lazy(() => import('../pages/EditarManager'))
+const EditarProducto = lazy(() => import('../pages/EditarProducto'))
+const CrearRestaurante = lazy(() => import('../pages/CrearRestaurante'))
 
 /**
  * ⚠ These are internal routes!
@@ -23,28 +27,48 @@ const Blank = lazy(() => import('../pages/Blank'))
  */
 const routes = [
   {
-    path: '/dashboard', // the url
-    component: Dashboard, // view rendered
+    path: '/restaurantes', // the url
+    component: Restaurantes, // view rendered
+  },
+  {
+    path: '/domiciliarios',
+    component: Domiciliarios,
+  },
+  {
+    path: '/restauranteEditar/:id',
+    component: EditarRestaurante,
+  },
+  {
+    path: '/domiciliarioEditar/:id',
+    component: EditarDomiciliario,
+  },
+  {
+    path: '/managerEditar/:id',
+    component: EditarManager,
+  },
+  {
+    path: '/productoEditar/:id',
+    component: EditarProducto,
+  },
+  {
+    path: '/restauranteCrear/',
+    component: CrearRestaurante,
+  },
+  {
+    path: '/managers',
+    component: Managers,
+  },
+  {
+    path: '/productos',
+    component: Productos,
   },
   {
     path: '/forms',
-    component: Forms,
-  },
-  {
-    path: '/cards',
-    component: Cards,
-  },
-  {
-    path: '/charts',
-    component: Charts,
+    component: EditarRestaurante,
   },
   {
     path: '/buttons',
     component: Buttons,
-  },
-  {
-    path: '/modals',
-    component: Modals,
   },
   {
     path: '/tables',

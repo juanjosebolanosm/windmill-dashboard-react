@@ -1,85 +1,117 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { url } from "../Services/ApiConfig";
+import CTA from "../components/CTA";
+import * as AdminService from "../Services/AdminService";
+import PageTitle from "../components/Typography/PageTitle";
+import SectionTitle from "../components/Typography/SectionTitle";
+import {
+  Input,
+  HelperText,
+  Label,
+  Select,
+  Textarea,
+  Button,
+} from "@windmill/react-ui";
+import { HeartIcon, EditIcon } from "../icons";
+import { MailIcon } from "../icons";
 
-import CTA from '../components/CTA'
-import PageTitle from '../components/Typography/PageTitle'
-import SectionTitle from '../components/Typography/SectionTitle'
-import { Input, HelperText, Label, Select, Textarea } from '@windmill/react-ui'
+function EditarRestaurante() {
+  const { id } = useParams();
 
-import { MailIcon } from '../icons'
+  useEffect(() => {
+    fetch(url + "/usuarios/get/" + id + "/")
+      .then((res) => res.json())
+      .then((result) => {
+        setRid(result.id);
+        setRnombre(result.nombrecliente);
+        setRtelefono(result.Telefono);
+        setRemail(result.e_mail);
+        setRrestaurante(result.Restaurante);
+        // console.log(result.id)
+      });
+  }, [id]);
 
-function Forms() {
+  const handleSubmit = () => {
+    console.log("A name was submitted: ");
+    // event.preventDefault();
+    var data = {
+      // 'id': rid,
+      nombrecliente: rnombre,
+      Telefono: rtelefono,
+      e_mail: remail,
+      Restaurante: rrestaurante,
+    };
+    
+    const result = AdminService.updateUser(rid, data)
+      // console.log(result)
+      .then((result) => {
+        // alert(result['message'])
+        // if (result['status'] === 'ok') {
+        alert("Se editó el Manager correctamente");
+        window.location.href = "/app/managers";
+        // }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const [rid, setRid] = useState("");
+  const [rnombre, setRnombre] = useState("");
+  const [rtelefono, setRtelefono] = useState("");
+  const [remail, setRemail] = useState("");
+  const [rrestaurante, setRrestaurante] = useState("");
   return (
     <>
-      <PageTitle>Forms</PageTitle>
-      <CTA />
-      <SectionTitle>Elements</SectionTitle>
+      <PageTitle>Editar Manager</PageTitle>
 
       <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <Label>
-          <span>Name</span>
-          <Input className="mt-1" placeholder="Jane Doe" />
+          <span>Nombre Manager</span>
+          <Input className="mt-1" value={rnombre}
+            onChange={(e) => setRnombre(e.target.value)}
+          />
         </Label>
 
         <Label className="mt-4">
-          <span>Disabled</span>
-          <Input disabled className="mt-1" placeholder="Jane Doe" />
+          <span>ID Manager</span>
+          <Input disabled className="mt-1" value={rid} 
+            onChange={(e) => setRid(e.target.value)}
+          />
         </Label>
 
-        <div className="mt-4">
-          {/* TODO: Check if this label is accessible, or fallback */}
-          {/* <span className="text-sm text-gray-700 dark:text-gray-400">Account Type</span> */}
-          <Label>Account Type</Label>
-          <div className="mt-2">
-            <Label radio>
-              <Input type="radio" value="personal" name="accountType" />
-              <span className="ml-2">Personal</span>
-            </Label>
-            <Label className="ml-6" radio>
-              <Input type="radio" value="business" name="accountType" />
-              <span className="ml-2">Business</span>
-            </Label>
-            <Label disabled className="ml-6" radio>
-              <Input disabled type="radio" value="disabled" name="accountType" />
-              <span className="ml-2">Disabled</span>
-            </Label>
-          </div>
+        <Label className="mt-4">
+          <span>Correo Electronico</span>
+          <Input className="mt-1" value={remail} 
+            onChange={(e) => setRemail(e.target.value)}
+          />
+        </Label>
+
+        
+        <Label className="mt-4">
+          <span>Telefono</span>
+          <Input className="mt-1" value={rtelefono} 
+            onChange={(e) => setRtelefono(e.target.value)}
+          />
+        </Label>
+
+        <Label className="mt-4">
+          <span>Restaurante</span>
+          <Input className="mt-1" value={rrestaurante} 
+            onChange={(e) => setRrestaurante(e.target.value)}
+          />
+        </Label>
+
+
+        <div className="mt-6 flex justify-center" check>
+          <Button iconRight={EditIcon} onClick={() => {handleSubmit()}} >
+            <span>Editar Domiciliario</span>
+          </Button>
         </div>
-
-        <Label className="mt-4">
-          <span>Requested Limit</span>
-          <Select className="mt-1">
-            <option>$1,000</option>
-            <option>$5,000</option>
-            <option>$10,000</option>
-            <option>$25,000</option>
-          </Select>
-        </Label>
-
-        <Label className="mt-4">
-          <span>Multiselect</span>
-          <Select className="mt-1" multiple>
-            <option>Option 1</option>
-            <option>Option 2</option>
-            <option>Option 3</option>
-            <option>Option 4</option>
-            <option>Option 5</option>
-          </Select>
-        </Label>
-
-        <Label className="mt-4">
-          <span>Message</span>
-          <Textarea className="mt-1" rows="3" placeholder="Enter some long form content." />
-        </Label>
-
-        <Label className="mt-6" check>
-          <Input type="checkbox" />
-          <span className="ml-2">
-            I agree to the <span className="underline">privacy policy</span>
-          </span>
-        </Label>
       </div>
 
-      <SectionTitle>Validation</SectionTitle>
+      {/* <SectionTitle>Validation</SectionTitle>
 
       <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <Label>
@@ -99,15 +131,15 @@ function Forms() {
           <Input className="mt-1" placeholder="Jane Doe" />
           <HelperText>Your password must be at least 6 characters long.</HelperText>
         </Label>
-      </div>
+      </div> */}
 
       {/* <!-- Inputs with icons --> */}
-      <SectionTitle>Icons</SectionTitle>
+      {/* <SectionTitle>Icons</SectionTitle> */}
 
-      <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+      {/* <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <Label>
           <span>Icon left</span>
-          {/* <!-- focus-within sets the color for the icon when input is focused --> */}
+        
           <div className="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
             <input
               className="block w-full pl-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
@@ -121,7 +153,7 @@ function Forms() {
 
         <Label className="mt-4">
           <span className="text-gray-700 dark:text-gray-400">Icon right</span>
-          {/* <!-- focus-within sets the color for the icon when input is focused --> */}
+
           <div className="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
             <input
               className="block w-full pr-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
@@ -132,9 +164,9 @@ function Forms() {
             </div>
           </div>
         </Label>
-      </div>
+      </div> */}
 
-      {/* <!-- Inputs with buttons --> */}
+      {/*   
       <SectionTitle>Buttons</SectionTitle>
 
       <div className="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
@@ -163,9 +195,9 @@ function Forms() {
             </button>
           </div>
         </Label>
-      </div>
+      </div> */}
     </>
-  )
+  );
 }
 
-export default Forms
+export default EditarRestaurante;

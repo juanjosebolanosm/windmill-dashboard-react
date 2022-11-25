@@ -7,67 +7,27 @@
  */
 const routes = [
   {
-    path: '/app/dashboard', // the url
+    path: '/app/restaurantes', // the url
     icon: 'HomeIcon', // the component being exported from icons/index.js
-    name: 'Dashboard', // name that appear in Sidebar
+    name: 'Restaurantes', // name that appear in Sidebar
   },
   {
-    path: '/app/forms',
-    icon: 'FormsIcon',
-    name: 'Forms',
+    path: '/app/domiciliarios', // the url
+    icon: 'FormsIcon', // the component being exported from icons/index.js
+    name: 'Domiciliarios', // name that appear in Sidebar
   },
   {
-    path: '/app/cards',
-    icon: 'CardsIcon',
-    name: 'Cards',
+    path: '/app/managers', // the url
+    icon: 'PeopleIcon', // the component being exported from icons/index.js
+    name: 'Managers', // name that appear in Sidebar
   },
   {
-    path: '/app/charts',
-    icon: 'ChartsIcon',
-    name: 'Charts',
+    path: '/app/productos', // the url
+    icon: 'CartIcon', // the component being exported from icons/index.js
+    name: 'Productos', // name that appear in Sidebar
   },
-  {
-    path: '/app/buttons',
-    icon: 'ButtonsIcon',
-    name: 'Buttons',
-  },
-  {
-    path: '/app/modals',
-    icon: 'ModalsIcon',
-    name: 'Modals',
-  },
-  {
-    path: '/app/tables',
-    icon: 'TablesIcon',
-    name: 'Tables',
-  },
-  {
-    icon: 'PagesIcon',
-    name: 'Pages',
-    routes: [
-      // submenu
-      {
-        path: '/login',
-        name: 'Login',
-      },
-      {
-        path: '/create-account',
-        name: 'Create account',
-      },
-      {
-        path: '/forgot-password',
-        name: 'Forgot password',
-      },
-      {
-        path: '/app/404',
-        name: '404',
-      },
-      {
-        path: '/app/blank',
-        name: 'Blank',
-      },
-    ],
-  },
+
+
 ]
 
 export default routes

@@ -9,6 +9,7 @@ import ThemedSuspense from '../components/ThemedSuspense'
 import { SidebarContext } from '../context/SidebarContext'
 
 const Page404 = lazy(() => import('../pages/404'))
+const blank =  lazy(() => import('../pages/Blank'))
 
 function Layout() {
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext)
@@ -39,7 +40,8 @@ function Layout() {
                   />
                 ) : null
               })}
-              <Redirect exact from="/app" to="/app/dashboard" />
+              
+              <Redirect exact from="/app" to="/app/restaurantes" />
               <Route component={Page404} />
             </Switch>
           </Suspense>
